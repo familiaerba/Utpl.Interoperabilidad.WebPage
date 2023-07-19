@@ -30,5 +30,9 @@ def add():
 
     return redirect(url_for('personas'))
 
+@app.route('/clientes')
+def clientes():
+    return render_template('clientes.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
