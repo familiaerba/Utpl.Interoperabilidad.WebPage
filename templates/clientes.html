@@ -24,7 +24,7 @@ Lista de Clientes
 
       <th scope="col">Nombre</th>
 
-      <th scope="col">Email</th>
+      <th scope="col">Ciudad</th>
 
     </tr>
 
@@ -32,15 +32,15 @@ Lista de Clientes
 
   <tbody>
 
-    {% for guest in guests %}
+    {% for item in clientes %}
 
     <tr>
 
-      <th scope="row">{{ guest.id }}</th>
+      <th scope="row">{{ item.id }}</th>
 
-      <td>{{ guest.name }}</td>
+      <td>{{ item.nombre }}</td>
 
-      <td>{{ guest.email }}</td>
+      <td>{{ item.ciudad }}</td>
 
     </tr>
 
