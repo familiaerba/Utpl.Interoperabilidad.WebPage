@@ -28,12 +28,15 @@ def personas():
 def add():
     print("llego por aqui a guardar")
     nombre = request.form.get('nombre')
-    apellido = request.form.get('apellido')
+    identificacion = request.form.get('identificacion')
     edad = int(request.form.get('edad'))
 
-    personaList.append({"nombre": nombre, "apellido": apellido, "edad": edad})
 
-    return redirect(url_for('personas'))
+person_data = {"nombre": nombre, "edad": edad, "ciudad": ciudad, "identificacion": identificacion}
+   
+   headers = {'apikey': API_KEY}
+    responseHabitacionesS = requests.post('https://utplwso2.tk/ApiCliente/2.0/cliente', json=person_data, headers=headers)
+    return redirect(url_for('cliente'))
 
 
 @app.route('/clientes')
