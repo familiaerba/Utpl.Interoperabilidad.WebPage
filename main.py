@@ -19,32 +19,58 @@ def home():
 @app.route('/about')
 def about():
     return render_template('about.html')
-
+#Este metodo permite obtener personas
 @app.route('/personas')
 def personas():
-    return render_template('personas.html', personas=personaList)
+    headers = {'apikey': API_KEY}
+    response = requests.get('https://utplwso2.tk/apipersona/3.0/personas', headers=headers)
+    print(response)
+    return render_template('personas.html', personas=response.json())
 
+#Este metodo permite eliminar una persona
+@app.route('/personas/delete/<idpersona>')
+def delete_personas(idpersona):
+    headers = {'apikey': API_KEY}
+    response = requests.delete('https://utplwso2.tk/apipersona/3.0/personas/'+idpersona, headers=headers)
+    print(response)
+    return redirect(url_for('personas'))
+
+#Este metodo permite agregar una persona al api
 @app.route('/personas', methods=['POST'])
 def add():
     print("llego por aqui a guardar")
     nombre = request.form.get('nombre')
     identificacion = request.form.get('identificacion')
     edad = int(request.form.get('edad'))
+    ciudad = request.form.get('ciudad')
 
 
     person_data = {"nombre": nombre, "edad": edad, "ciudad": ciudad, "identificacion": identificacion}
-   
+
     headers = {'apikey': API_KEY}
-    responseHabitacionesS = requests.post('https://utplwso2.tk/ApiCliente/2.0/cliente', json=person_data, headers=headers)
-    return redirect(url_for('cliente'))
+    responseHabitacionesS = requests.post('https://utplwso2.tk/apipersona/3.0/personas', json=person_data, headers=headers)
 
+    return redirect(url_for('personas'))
 
+#Este metodo permite cargar los clientes desde el api
 @app.route('/clientes')
 def clientes():
     headers = {'apikey': API_KEY}
     response = requests.get('https://utplwso2.tk/ApiCliente/2.0/cliente', headers=headers)
     print(response.json())
     return render_template('clientes.html', clientes=response.json())
+
+#Este metodo permite agregar una cliente al api
+@app.route('/clientes', methods=['POST'])
+def addCliente():
+    print("llego por aqui a guardar un cliente")
+    ciudad = request.form.get('ciudad')
+    
+    headers = {'apikey': API_KEY}
+    responseCliente = requests.post('https://utplwso2.tk/ApiCliente/2.0/cliente', json=cliente_data, headers=headers)
+
+    return redirect(url_for('clientes'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
