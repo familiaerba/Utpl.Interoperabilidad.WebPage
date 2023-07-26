@@ -66,8 +66,10 @@ def addCliente():
     print("llego por aqui a guardar un cliente")
     ciudad = request.form.get('ciudad')
     cantidad = int(request.form.get('cantidad')) 
-
-    cliente_data = { "ciudad": ciudad, "cantPro": cantidad}
+    nombre = request.form.get('nombre')
+    cedula = request.form.get('cedula')
+    
+    cliente_data = { "ciudad": ciudad, "cantPro": cantidad, "nombre": nombre, "cedula": cedula}
     
     headers = {'apikey': API_KEY}
     responseCliente = requests.post('https://utplwso2.tk/ApiCliente/2.0/cliente', json=cliente_data, headers=headers)
